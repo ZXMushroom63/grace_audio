@@ -1,0 +1,27 @@
+1. Put your songs in the PLAYLIST folder
+   - Supported formats: .mp3, .m4a, .flac, .opus, .ogg, .alac, .wav, .wma
+
+2. Double-click UPDATE_PLAYLIST.bat
+   - This will convert all songs to a roblox-friendly format (44100hz libvorbis ogg) and store them in the playlist_cache folder
+
+3. Double-click RUN.bat
+
+4. Join/Rejoin the Grace Lobby. You should see 'Piped cache file' in green text when the music is successfully patched
+
+4.5 IMPORTANT!!!!
+  - If you are using multiple tracks in the in-game playlist, you must first cache the songs
+  - To do this, press ~ to open the escape menu. Click on 'stuff'. Click on the headphones. Play every song.
+  - This prevents roblox from taking ownership of the files
+
+5. In-game, supported tracks will be replaced. (Ultrasonic Faith, Clocktower Mayhem, etc)
+
+6. The music will be updated every time the lobby resets or you rejoin (technical limitations)
+
+
+
+
+BONUS: Naming a file (any file extension) in PLAYLIST the following will override:
+  special_lobby -> Override falling down elavator music
+  special_carnation -> Override carnation chase sfx
+  special_dyson_vacuum -> Override elkman/soulsucker sfx (broken!!!)
+  special_random_ass_scream -> Override a random scream sound effect
