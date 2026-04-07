@@ -9,9 +9,9 @@
 4. Join/Rejoin the Grace Lobby. You should see 'Piped cache file' in green text when the music is successfully patched
 
 4.5 IMPORTANT!!!!
-  - If you are using multiple tracks in the in-game playlist, you must first cache the songs
+  - If you are using multiple tracks in the in-game playlist, you need to cache the songs.
   - To do this, press ~ to open the escape menu. Click on 'stuff'. Click on the headphones. Play every song.
-  - This prevents roblox from taking ownership of the files
+  - This prevents roblox from taking ownership of the files. Not 100% accurate, so you may need to adjust your playlist on the fly to only include patched songs.
 
 5. In-game, supported tracks will be replaced. (Ultrasonic Faith, Clocktower Mayhem, etc)
 
