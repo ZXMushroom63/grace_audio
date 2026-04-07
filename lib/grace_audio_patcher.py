@@ -83,7 +83,11 @@ print(f"{ansi("yellow",0)}>> GRACE RUNTIME AUDIO PATCHER FOR ROBLOX ( Patch V: i
 oggs = []
 
 current_dir = os.getcwd() + "/playlist_cache"
-for file in os.listdir(current_dir):
+try:
+    playlist_files = os.listdir(current_dir)
+except:
+    playlist_files = []
+for file in playlist_files:
     if file.endswith(".ogg"):
         basename = os.path.basename(file)
         if (basename in CUSTOM_NAMES):
@@ -96,15 +100,15 @@ if (len(oggs) == 0):
     print("First, put your songs in the PLAYLIST folder")
     print("Then, run UPDATE_PLAYLIST.bat")
     print("Finally, close this window, and run RUN.bat")
-    print("(full instructions in HOW_TO_USE.bat)")
+    print("(full instructions in HOW_TO_USE.txt)")
     time.sleep(1000)
     exit()
 random.shuffle(oggs)
 print(f"""{ansi("rst",0)}Target file sizes {ansi("magenta",0)}[USING FSIZE]: \n  - {
-    "\n - ".join(
+    "\n  - ".join(
         map(
             lambda x: 
-                f"{ansi("magenta",0)}{x} bytes{ansi("rst",0)} ({REVERSE_MAP[x]})",
+                f"{ansi("magenta",0)}{x} bytes ({REVERSE_MAP[x]})",
             startTriggers
         )
     )
@@ -160,6 +164,8 @@ def kernel_copy(src, dst):
     kernel32.CloseHandle(fd)
 
 def shared_copy(path_src, fd):
+    # was experimenting with trying to get shared file locks on all the audio assets, to bypass roblox file locks
+    # no success with this method so far
     h_src = kernel32.CreateFileW(
         path_src, GENERIC_READ, 
         FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
@@ -207,7 +213,14 @@ def patch(fname, event, readonly=False):
         if (fname in lock_map):
             shared_copy(up_next, lock_map[fname])
 
-class MyHandler(FileSystemEventHandler):
+class DebugHandler(FileSystemEventHandler):
+    def on_modified(self, event):
+        try:
+            size = os.path.getsize(event.src_path)
+        except:
+            return
+        print(f"[MD] Trigger Match Found: {os.path.basename(event.src_path)} , size (bytes): {size}")
+class GraceHandler(FileSystemEventHandler):
     def on_modified(self, event):
         global lock_map
         global last_ev
@@ -228,8 +241,7 @@ class MyHandler(FileSystemEventHandler):
                 print(f"{ansi("green",0)}applied {os.path.basename(CUSTOMS_FINAL[size])}{ansi("rst",0)}")
             except:
                 print(f"{ansi("red",0)}failed to {os.path.basename(CUSTOMS_FINAL[size])}{ansi("rst",0)}")
-            
-        fname = os.path.basename(event.src_path)
+        
         last_ev = {"type": "mod", "name": fname}
 
     def on_created(self, event):
@@ -256,7 +268,7 @@ if __name__ == "__main__":
     
 
     print(f"{ansi("green",0)}Hooking into: {path}{ansi("rst",0)}")
-    event_handler = MyHandler()
+    event_handler = GraceHandler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
@@ -265,7 +277,15 @@ if __name__ == "__main__":
     try:
         while True:
             cmd = input()
-            print(f"terminal is useless for now")
+            if (cmd == "/netdbg"):
+                print("Use debug mode in the Grace lobby to get filesizes for new songs")
+                print("Use the headphones item (inside Menu->Stuff) to load song assets, and then add them to SETMAP inside the python file.")
+                debug_handler = DebugHandler()
+                observer = Observer()
+                observer.schedule(debug_handler, path, recursive=True)
+                observer.start()
+            else:
+                print(f"Available commands: /netdbg")
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
