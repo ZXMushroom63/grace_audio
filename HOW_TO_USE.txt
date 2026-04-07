@@ -25,3 +25,4 @@ BONUS: Naming a file (any file extension) in PLAYLIST the following will overrid
   special_carnation -> Override carnation chase sfx
   special_dyson_vacuum -> Override elkman/soulsucker sfx (broken!!!)
   special_random_ass_scream -> Override a random scream sound effect
+  special_selectall -> Override all sound effects, takes all priority, works in any and all roblox games

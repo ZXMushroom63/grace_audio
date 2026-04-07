@@ -23,6 +23,7 @@ OPEN_EXISTING = 3
 CREATE_ALWAYS = 2
 kernel32 = ctypes.windll.kernel32
 
+selectall = None
 
 CUSTOMS = {
     2259632: "special_lobby.ogg",
@@ -57,6 +58,7 @@ SETMAP = {
     "SavingYourGrace": [2205856],
     "ClocktowerMayhem": [3090144],
     "CollapsingTimeRift": [4191064],
+    "NoWayOutOfFate": [2886146],
     "CollapsingVoidRift": [3312430],
     "DarkMatter": [3102803],
     "ExpertRace": [1713565],
@@ -90,6 +92,9 @@ except:
 for file in playlist_files:
     if file.endswith(".ogg"):
         basename = os.path.basename(file)
+        if (basename == "special_selectall.ogg"):
+            selectall = current_dir + "/" + file
+            break
         if (basename in CUSTOM_NAMES):
             print(f"  - Registered: {file} [SPECIAL]")
             CUSTOMS_FINAL[CUSTOMS_REVERSE[basename]] = current_dir + "/" + file
@@ -224,8 +229,12 @@ class GraceHandler(FileSystemEventHandler):
     def on_modified(self, event):
         global lock_map
         global last_ev
+        global selectall
         
-        if event.is_directory: return
+        if (selectall != None):
+            shutil.copyfile(selectall, event.src_path)
+            print(f"{ansi("green",0)}[*ALL] force-applied {os.path.basename(selectall)}{ansi("rst",0)}")
+            return
         
         try:
             size = os.path.getsize(event.src_path)
