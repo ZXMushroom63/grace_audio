@@ -84,6 +84,8 @@ startTriggers = (lambda x: [item for sublist in [q for q in x.values()] for item
     SETMAP
 )
 print(f"{ansi("yellow",0)}>> GRACE RUNTIME AUDIO PATCHER FOR ROBLOX ( Patch V: insanity )")
+print("   |- Made with suffering by @ZXMushroom63")
+print("")
 oggs = []
 
 current_dir = os.getcwd() + "/playlist_cache"
