@@ -10,6 +10,7 @@ import stat
 import sys
 from watchdog.events import FileSystemEventHandler
 
+random.seed(os.urandom(64)) #i have had experiences with default python entropy
 os.system('')
 
 GENERIC_READ = 0x80000000
@@ -56,6 +57,7 @@ SETMAP = {
     "AviaryAction": [3618798],
     "BlueLicorice": [2280850],
     "SavingYourGrace": [2205856],
+    "ClairDeLune": [4245062],
     "ClocktowerMayhem": [3090144],
     "CollapsingTimeRift": [4191064],
     "NoWayOutOfFate": [2886146],
@@ -232,8 +234,11 @@ class GraceHandler(FileSystemEventHandler):
         global selectall
         
         if (selectall != None):
-            shutil.copyfile(selectall, event.src_path)
-            print(f"{ansi("green",0)}[*ALL] force-applied {os.path.basename(selectall)}{ansi("rst",0)}")
+            try:
+                shutil.copyfile(selectall, event.src_path)
+                print(f"{ansi("green",0)}[*ALL] force-applied {os.path.basename(selectall)}{ansi("rst",0)}")
+            except:
+                pass
             return
         
         try:
