@@ -1,4 +1,5 @@
 @echo off
+mkdir PLAYLIST
 echo Rebuilding playlist cache...
 rd /s /q playlist_cache
 mkdir playlist_cache
