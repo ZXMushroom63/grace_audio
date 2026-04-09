@@ -1,3 +1,4 @@
 playlist_cache/
 PLAYLIST/*
 __pycache__
+*.obj

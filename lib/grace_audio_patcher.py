@@ -68,13 +68,15 @@ SETMAP = {
     "Glaggle": [2299803],
     "ItsHappyHour": [2913861],
     "ItsPizzaTime": [3242347],
-    "Kitchen": [3350221],
+    "Kitchen_IAmBread": [3350221],
     "RunningMan": [3136419],
     "TheWorldRevolving": [3253729],
     "TimeToSmile": [3016324],
     "ThousandMarch": [3903227],
+    "PanicRestaurant": [8189126],
     "8BIT": [2970465],
     "DTID": [2656276],
+    "GlucoseGetawayOld": [3491193],
 }
 REVERSE_MAP = {}
 for key in SETMAP:
