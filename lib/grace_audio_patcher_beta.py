@@ -45,6 +45,17 @@ def has_winfsp():
         return False
     return False
 
+print("Checking for WinFSP...")
+if not has_winfsp():
+    print("WinFSP is not currently installed on this system.")
+    print("Please proceed through the installation process.")
+    os.system(".\\lib\\winfsp-2.1.25156.msi")
+    while not has_winfsp():
+        time.sleep(1)
+    time.sleep(5)
+print("")
+print("WinFSP is installed!")
+
 from winfspy import (
     FileSystem,
     NTStatusMediaWriteProtected,
@@ -160,16 +171,7 @@ def mk_grace_fs(mountpoint):
         # security_timeout=10000,
     )
     return fs
-print("Checking for WinFSP...")
-if not has_winfsp():
-    print("WinFSP is not currently installed on this system.")
-    print("Please proceed through the installation process.")
-    os.system(".\\lib\\winfsp-2.1.25156.msi")
-    while not has_winfsp():
-        time.sleep(1)
-    time.sleep(5)
-print("")
-print("WinFSP is installed!")
+
 def main(mountpoint):
     fs = mk_grace_fs(mountpoint)
     try:
