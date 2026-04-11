@@ -195,7 +195,7 @@ def main(mountpoint):
         print("FS started, keep it running forever")
         time.sleep(1)
         os.makedirs(mountpoint + "\\sounds")
-        subprocess.run(f'mklink /d "{path}" "{mountpoint}\\sounds"', shell=True)
+        subprocess.run(f'mklink /d "{path}" "{mountpoint}\\sounds" >NUL 2>&1', shell=True)
         while True:
             time.sleep(1)
 
