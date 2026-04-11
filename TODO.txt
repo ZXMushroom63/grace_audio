@@ -1,2 +1,0 @@
-winfsp-python / winfspy - a VFS, grea solution with r/w intercepts
-mklink /d "LinkPath" "TargetPath"

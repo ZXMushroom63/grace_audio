@@ -7,7 +7,7 @@ set /a count+=13
 if !count! GEQ 100 (
     goto done
 )
-echo Loading: !count!%
+echo Loading: !count!%%
 timeout /t 1 >nul
 goto load
 
