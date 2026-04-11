@@ -66,6 +66,11 @@ from winfspy.memfs import InMemoryFileSystemOperations, FileObj, Path, FileSyste
 targets = []
 targetmap = {}
 
+
+
+print(f"{ansi("yellow",0)}>> GRACE RUNTIME AUDIO PATCHER FOR ROBLOX ( Patch VII: dementia )")
+print("   |- Made with suffering by @ZXMushroom63" + ansi("rst",0))
+print(ansi("magenta", 0))
 with open(".\\lib\\db.txt") as f:
     lines = f.readlines()
     for l in lines:
@@ -76,12 +81,9 @@ with open(".\\lib\\db.txt") as f:
         targets.append(targ)
         name = parts[1].strip().replace("\"", "")
         targetmap[targ] = name
-        print(f"Registered - {name}")
+        print(f"  - Target: {name} sz={targ}")
     f.close()
 
-print(f"{ansi("yellow",0)}>> GRACE RUNTIME AUDIO PATCHER FOR ROBLOX ( Patch V: insanity )")
-print("   |- Made with suffering by @ZXMushroom63")
-print("")
 path = os.path.expandvars("%temp%\\Roblox\\sounds")
 os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
 if os.path.exists(path):
@@ -108,7 +110,7 @@ for file in playlist_files:
             print(f"  - Registered: {file}")
             oggs.append(current_dir + "/" + file)
 if (len(oggs) == 0):
-    print("First, put your songs in the PLAYLIST folder")
+    print(ansi("rst", 0) + "First, put your songs in the PLAYLIST folder")
     print("Then, run UPDATE_PLAYLIST.bat")
     print("Finally, close this window, and run RUN.bat")
     print("(full instructions in HOW_TO_USE.txt)")
@@ -132,15 +134,28 @@ class GraceOperations(InMemoryFileSystemOperations):
         else:
             ret = file_context.file_obj.write(buffer, offset, write_to_end_of_file)
         
-        
+        if recurse_blocker:
+            return ret
         fsize = file_context.file_obj.file_size
         if fsize in targets and not recurse_blocker:
-            print(f"Detected: {fsize} - {targetmap[fsize]}")
-            # recurse_blocker = True
-            # shutil.copyfile(up_next, "O:" +file_context.file_obj.file_name)
-            # print(f"{ansi("green",0)}[SUCCESS] Piped cache file! :) {ansi("blue",0)} Up next: " + os.path.basename(up_next) + ansi("rst",0))
-            # reroll_music()
-            # recurse_blocker = False
+            recurse_blocker = True
+            with open(up_next, "rb") as file:
+                data = bytearray(file.read())
+                file_context.file_obj.data = data
+                file_context.file_obj.set_file_size(len(data))
+                file_context.file_obj.data = data
+                print(f"{ansi("green",0)}[SUCCESS] Piped cache file! :) {ansi("blue",0)} Up next: " + os.path.basename(up_next) + ansi("rst",0))
+                reroll_music()
+            recurse_blocker = False
+        elif fsize in CUSTOMS_FINAL:
+            recurse_blocker = True
+            with open(CUSTOMS_FINAL[fsize], "rb") as file:
+                data = bytearray(file.read())
+                file_context.file_obj.data = data
+                file_context.file_obj.set_file_size(len(data))
+                file_context.file_obj.data = data
+                print(f"{ansi("green",0)}[SUCCESS] Piped cache file! :) {ansi("blue",0)} Up next: " + os.path.basename(up_next) + ansi("rst",0))
+            recurse_blocker = False
         
         return ret
 
@@ -175,7 +190,7 @@ def mk_grace_fs(mountpoint):
 def main(mountpoint):
     fs = mk_grace_fs(mountpoint)
     try:
-        print("Starting FS")
+        print(ansi("rst", 0) + "Starting FS")
         fs.start()
         print("FS started, keep it running forever")
         time.sleep(1)
