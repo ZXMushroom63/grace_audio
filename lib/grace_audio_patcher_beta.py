@@ -193,16 +193,27 @@ def main(mountpoint):
         print(ansi("rst", 0) + "Starting FS")
         fs.start()
         print("FS started, keep it running forever")
+        print("*** NOTICE **********************")
+        print("* Press CTRL+C IN THIS TERMINAL *")
+        print("* TO STOP, CLOSE THE WINDOW AF- *")
+        print("* -TER, TO AVOID FUTURE ISSUES. *")
+        print("*********************************")
         time.sleep(1)
         os.makedirs(mountpoint + "\\sounds")
         subprocess.run(f'mklink /d "{path}" "{mountpoint}\\sounds" >NUL 2>&1', shell=True)
         while True:
-            time.sleep(1)
+            cmd = input("")
 
     finally:
         print("Stopping FS")
         fs.stop()
         print("FS stopped")
+        print("Unlinking sound directory from VFS")
+        subprocess.run(f'rd "{path}" >NUL 2>&1', shell=True)
+        subprocess.run(f'mkdir "{path}" >NUL 2>&1', shell=True)
+        time.sleep(0.25)
+        print("Bye!")
+        time.sleep(0.35)
 
 main("O:")
 time.sleep(69420)
