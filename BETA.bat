@@ -1,4 +1,0 @@
-@echo off
-mkdir PLAYLIST
-echo Launching...
-start %SystemRoot%\System32\conhost.exe cmd.exe /k "title GraceRuntimeAudioPatcher_P7 && .\python-rt-win64\python.exe .\lib\grace_audio_patcher_beta.py"
