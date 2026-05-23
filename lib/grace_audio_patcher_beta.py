@@ -203,8 +203,11 @@ def main(mountpoint):
         subprocess.run(f'mklink /d "{path}" "{mountpoint}\\sounds" >NUL 2>&1', shell=True)
         while True:
             cmd = input("")
-
+    except:
+        print("Some exception (manual or error) has occured, and the Grace Audio Patcher will now exit.")
     finally:
+        print("Closing roblox...")
+        os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
         print("Stopping FS")
         fs.stop()
         print("FS stopped")
@@ -213,6 +216,7 @@ def main(mountpoint):
         subprocess.run(f'mkdir "{path}" >NUL 2>&1', shell=True)
         time.sleep(0.25)
         print("Bye!")
+        print("(IGNORE ANY ERRORS!)")
         time.sleep(0.35)
 
 main("O:")

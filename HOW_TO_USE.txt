@@ -5,17 +5,13 @@
    - This will convert all songs to a roblox-friendly format (44100hz libvorbis ogg) and store them in the playlist_cache folder
 
 3. Double-click RUN.bat
+   - You may be asked to setup 'winfsp'. This is the tool used to create a virtual disk drive that allows for overriding the grace soundtrack with custom songs.
 
 4. Join/Rejoin the Grace Lobby. You should see 'Piped cache file' in green text when the music is successfully patched
 
-4.5 IMPORTANT!!!!
-  - If you are using multiple tracks in the in-game playlist, you need to cache the songs.
-  - To do this, press ~ to open the escape menu. Click on 'stuff'. Click on the headphones. Play every song.
-  - This prevents roblox from taking ownership of the files. Not 100% accurate, so you may need to adjust your playlist on the fly to only include patched songs.
-
 5. In-game, supported tracks will be replaced. (Ultrasonic Faith, Clocktower Mayhem, etc)
 
-6. The music will be updated every time the lobby resets or you rejoin (technical limitations)
+6. Before closing the Grace Runtime Audio Patcher, press CTRL+C in the patcher console. This is necessary in order to revert edits made to the Roblox sound cache. (if you happen to forget, just start and close the patcher, which will resolve any issues)
 
 
 
