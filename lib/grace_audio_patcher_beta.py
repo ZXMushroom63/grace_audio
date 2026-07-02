@@ -28,6 +28,8 @@ CUSTOMS = {
     875794: "special_dyson_vacuum.ogg",
     556944: "special_carnation.ogg",
     587519: "special_random_ass_scream.ogg",
+    926148: "doors_sparkles.ogg",
+    802536: "doors_mines_elavator.ogg",
 }
 CUSTOMS_REVERSE = {}
 CUSTOM_NAMES = CUSTOMS_REVERSE.keys()
