@@ -8,6 +8,10 @@ import winreg
 import platform
 import random
 import shutil
+import json
+
+DEBUG = False
+
 def ansi(color, background=0):
     ANSI = {
         "rst": 0,
@@ -30,6 +34,7 @@ CUSTOMS = {
     587519: "special_random_ass_scream.ogg",
     926148: "doors_sparkles.ogg",
     802536: "doors_mines_elavator.ogg",
+    893313: "doors_toilet_flush.ogg"
 }
 CUSTOMS_REVERSE = {}
 CUSTOM_NAMES = CUSTOMS_REVERSE.keys()
@@ -68,7 +73,11 @@ from winfspy.memfs import InMemoryFileSystemOperations, FileObj, Path, FileSyste
 targets = []
 targetmap = {}
 
-
+if DEBUG:
+    try:
+        os.mkdir("debug")
+    except:
+        pass
 
 print(f"{ansi("yellow",0)}>> GRACE RUNTIME AUDIO PATCHER FOR ROBLOX ( Patch VII: dementia )")
 print("   |- Made with suffering by @ZXMushroom63" + ansi("rst",0))
@@ -125,6 +134,7 @@ def reroll_music():
     next = (oggs.index(up_next) + 1) % len(oggs)
     up_next = oggs[next]
 recurse_blocker = False
+size_mapping = {}
 class GraceOperations(InMemoryFileSystemOperations):
     def write(self, file_context, buffer, offset, write_to_end_of_file, constrained_io):
         global recurse_blocker
@@ -139,6 +149,16 @@ class GraceOperations(InMemoryFileSystemOperations):
         if recurse_blocker:
             return ret
         fsize = file_context.file_obj.file_size
+        
+        
+        if DEBUG:
+            trueName = os.path.basename(file_context.file_obj.path)
+            print(f"+debug | {trueName} -> {fsize} bytes")
+            size_mapping[trueName]=fsize
+            with open("debug/" + trueName, "wb") as bin:
+                bin.write(file_context.file_obj.data)
+            json.dump(size_mapping, open("debug/size_map.json", "w"))
+        
         if fsize in targets and not recurse_blocker:
             recurse_blocker = True
             with open(up_next, "rb") as file:
