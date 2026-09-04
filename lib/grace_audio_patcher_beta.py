@@ -205,6 +205,8 @@ class GraceOperations(InMemoryFileSystemOperations):
                 bin.write(file_context.file_obj.data)
             json.dump(size_mapping, open("debug/keymap.json", "w"), indent=2)
         if (fsize in killList or hsh in killList) and not recurse_blocker:
+            if (fsize in killList and not hsh in killList):
+                print(f"Potential upgrade for: {targetmap[fsize]} | use hashcode {hsh}")
             file_context.file_obj.data = data
             file_context.file_obj.set_file_size(len(data))
             print(
