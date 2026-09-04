@@ -22,4 +22,6 @@ BONUS: Naming a file (any file extension) in PLAYLIST the following will overrid
   special_dyson_vacuum -> Override elkman/soulsucker sfx (broken!!!)
   special_random_ass_scream -> Override a random scream sound effect
   doors_toilet_flush -> Override the flush sound effect for toilets in bathrooms in DOORS
+  doors_sparkles -> Override DOORS guiding light sparkles
+  doors_sparkles2 -> Override DOORS guiding light sparkles
   special_selectall -> Override all sound effects, takes all priority, works in any and all roblox games

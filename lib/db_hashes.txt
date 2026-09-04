@@ -1,0 +1,2 @@
+16887e00dd241e97 "DOORSCave1" killcode
+42565618dfba91fc "DOORSAmbi1" killcode
