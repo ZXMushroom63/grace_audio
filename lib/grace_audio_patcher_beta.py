@@ -284,10 +284,13 @@ def main(mountpoint):
         print("* TO STOP, CLOSE THE WINDOW AF- *")
         print("* -TER, TO AVOID FUTURE ISSUES. *")
         print("*********************************")
+        time.sleep(3)
+        os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
         time.sleep(1)
         os.makedirs(mountpoint + "\\sounds")
+        subprocess.run(f'rd "{path}" >NUL 2>&1', shell=True)
         subprocess.run(
-            f'mklink /d "{path}" "{mountpoint}\\sounds" >NUL 2>&1', shell=True
+            f'mklink /d "{path}" "{mountpoint}\\sounds"', shell=True
         )
         while True:
             cmd = input("")
