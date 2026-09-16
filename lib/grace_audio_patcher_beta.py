@@ -276,22 +276,25 @@ def mk_grace_fs(mountpoint):
 def main(mountpoint):
     fs = mk_grace_fs(mountpoint)
     try:
-        print(ansi("rst", 0) + "Starting FS")
+        print(ansi("rst", 0) + "Starting FS...")
         fs.start()
+        for i in range(1, 9, 1):
+            time.sleep(0.25)
+            print("hold please", end="\n" if i % 4 == 0 else " // ")
+            sys.stdout.flush()
+        os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
+        time.sleep(0.5)
+        os.makedirs(mountpoint + "\\sounds")
+        subprocess.run(f'rd "{path}" >NUL 2>&1', shell=True)
+        subprocess.run(
+            f'mklink /d "{path}" "{mountpoint}\\sounds"', shell=True
+        )
         print("FS started, keep it running forever")
         print("*** NOTICE **********************")
         print("* Press CTRL+C IN THIS TERMINAL *")
         print("* TO STOP, CLOSE THE WINDOW AF- *")
         print("* -TER, TO AVOID FUTURE ISSUES. *")
         print("*********************************")
-        time.sleep(3)
-        os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
-        time.sleep(1)
-        os.makedirs(mountpoint + "\\sounds")
-        subprocess.run(f'rd "{path}" >NUL 2>&1', shell=True)
-        subprocess.run(
-            f'mklink /d "{path}" "{mountpoint}\\sounds"', shell=True
-        )
         while True:
             cmd = input("")
     except:
