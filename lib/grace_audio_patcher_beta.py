@@ -1,3 +1,4 @@
+import ctypes
 import os
 import sys
 import stat
@@ -136,7 +137,20 @@ with open(".\\lib\\db_hashes.txt") as f:
         print(f"  - Target: {name} hash={targ}")
     f.close()
 
-path = os.path.expandvars("%temp%\\Roblox\\sounds")
+def get_short_path(long_path):
+    os.makedirs(long_path, exist_ok=True)
+    
+    buffer_size = 260
+    buffer = ctypes.create_unicode_buffer(buffer_size)
+    
+    result = ctypes.windll.kernel32.GetShortPathNameW(long_path, buffer, buffer_size)
+    
+    if result > 0:
+        return buffer.value
+    return long_path
+
+path = get_short_path(os.path.expandvars("%temp%\\Roblox\\sounds"))
+print(f"Trying: {path}")
 os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
 if os.path.exists(path):
     subprocess.run(f'del /s /q /f "{path}\\*" >NUL 2>&1', shell=True)
@@ -285,9 +299,9 @@ def main(mountpoint):
         subprocess.run("taskkill /F /IM RobloxPlayerBeta.exe /T", shell=True)
         time.sleep(0.5)
         os.makedirs(mountpoint + "\\sounds")
-        subprocess.run(f'rd "{path}"', shell=True)
+        subprocess.run(f'cmd /c rd /s /q "{path}"', shell=True)
         subprocess.run(
-            f'mklink /d "{path}" "{mountpoint}\\sounds"', shell=True
+            f'cmd /c mklink /D "{path}" "{mountpoint}\\sounds"', shell=True
         )
         print("FS started, keep it running forever")
         print("*** NOTICE **********************")
@@ -308,8 +322,8 @@ def main(mountpoint):
         fs.stop()
         print("FS stopped")
         print("Unlinking sound directory from VFS")
-        subprocess.run(f'rd "{path}" >NUL 2>&1', shell=True)
-        subprocess.run(f'mkdir "{path}" >NUL 2>&1', shell=True)
+        subprocess.run(f'cmd /c rd /s /q "{path}" >NUL 2>&1', shell=True)
+        subprocess.run(f'cmd /c mkdir "{path}" >NUL 2>&1', shell=True)
         time.sleep(0.25)
         print("Bye!")
         print("(IGNORE ANY ERRORS!)")
