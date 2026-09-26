@@ -282,10 +282,10 @@ def main(mountpoint):
             time.sleep(0.25)
             print("hold please", end="\n" if i % 4 == 0 else " // ")
             sys.stdout.flush()
-        os.system("taskkill /F /IM RobloxPlayerBeta.exe /T >NUL 2>&1")
+        subprocess.run("taskkill /F /IM RobloxPlayerBeta.exe /T", shell=True)
         time.sleep(0.5)
         os.makedirs(mountpoint + "\\sounds")
-        subprocess.run(f'rd "{path}" >NUL 2>&1', shell=True)
+        subprocess.run(f'rd "{path}"', shell=True)
         subprocess.run(
             f'mklink /d "{path}" "{mountpoint}\\sounds"', shell=True
         )
