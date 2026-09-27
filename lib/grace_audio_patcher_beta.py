@@ -138,16 +138,19 @@ with open(".\\lib\\db_hashes.txt") as f:
     f.close()
 
 def get_short_path(long_path):
-    os.makedirs(long_path, exist_ok=True)
-    
-    buffer_size = 260
-    buffer = ctypes.create_unicode_buffer(buffer_size)
-    
-    result = ctypes.windll.kernel32.GetShortPathNameW(long_path, buffer, buffer_size)
-    
-    if result > 0:
-        return buffer.value
-    return long_path
+    try:
+        os.makedirs(long_path, exist_ok=True)
+            
+        buffer_size = 260
+        buffer = ctypes.create_unicode_buffer(buffer_size)
+        
+        result = ctypes.windll.kernel32.GetShortPathNameW(long_path, buffer, buffer_size)
+        
+        if result > 0:
+            return buffer.value
+        return long_path
+    except:
+        return long_path
 
 path = get_short_path(os.path.expandvars("%temp%\\Roblox\\sounds"))
 print(f"Trying: {path}")
